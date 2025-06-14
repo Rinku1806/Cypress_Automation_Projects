@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-11T04:56:30.867Z",
+    "end": "2025-06-11T04:56:44.018Z",
+    "duration": 13151,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "5b64d7b1-51b1-46ea-a142-ae6119343a7b",
+      "title": "",
+      "fullFile": "cypress\\e2e\\SanityTests\\bk_framework.cy.js",
+      "file": "cypress\\e2e\\SanityTests\\bk_framework.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "81ee1d44-6189-4cce-a422-bf043460224e",
+          "title": "Other Automation Areas",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "bk_framework",
+              "fullTitle": "Other Automation Areas bk_framework",
+              "timedOut": null,
+              "duration": 13122,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const homepage = new _HomePage.default();\n//cy.visit(Cypress.config('baseUrl'))\ncy.visit(Cypress.env('url'));\ncy.url().should('include', 'angular');\nhomepage.getNameBox().type(testData.name);\nhomepage.getGender().select(testData.gender);\n// Pause for debugging\n//cy.pause()\n//cy.debug()     \n// Two way binding text validation\nhomepage.getTwoWayBindingBox().should('have.value', testData.name);\n// Min len attributes\nhomepage.getNameBox().should(\"have.attr\", 'minlength', \"2\");\nhomepage.getEntrepRadioButton().should('be.disabled');\nhomepage.getEntrepLabel().should('have.css', 'color', 'rgb(108, 117, 125)');\nhomepage.getEmployedRadioButtonLabel().should('have.css', 'color', 'rgb(33, 37, 41)');\nhomepage.getShopTab().click();\ncy.wait(2000);\ntestData.productName.forEach(function (element) {\n  cy.selectProduct(element);\n});\nconst shoppage = new _ShopPage.default();\nshoppage.getCheckOutButton().click();\nvar sumProdct = 0;\ncy.get('tr > :nth-child(4) > strong').each(($el, next, $list) => {\n  var productPrice = Number($el.text().split(\" \")[1].trim());\n  sumProdct += productPrice;\n  console.log(sumProdct);\n});\ncy.get('h3 > strong').then(function (element) {\n  var totalPrice = Number(element.text().split(\" \")[1].trim());\n  expect(totalPrice).to.equal(sumProdct);\n  console.log(totalPrice);\n});\nconst checkoutpage = new _CheckOutPage.default();\ncy.wait(2000);\ncheckoutpage.getCheckOutButton().click();\nconst purpage = new _PurchasePage.default();\npurpage.getCountryBox().type(\"india\");\ncy.wait(2000);\npurpage.getCountryAutoSugestions().click();\ncy.wait(2000);\npurpage.getAgreementCheckBox().click({\n  force: true\n});\npurpage.getPurchaseButton().click();\npurpage.getFinalMessage().should('include.text', \"Success\");\ncy.get('.alert').then(function (element) {\n  const actualtext = element.text();\n  expect(actualtext.includes(\"Success\")).to.be.true;\n});",
+              "err": {},
+              "uuid": "0dede3ac-2950-4d74-a4e1-8f5d433321d2",
+              "parentUUID": "81ee1d44-6189-4cce-a422-bf043460224e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "0dede3ac-2950-4d74-a4e1-8f5d433321d2"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 13122,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
